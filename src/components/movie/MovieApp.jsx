@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import HomeComponent from './HomeComponent'
+// import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+// import HomeComponent from './HomeComponent'
 import './MovieApp.css'
 import EntryComponent from './EntryComponent'
 import ViewComponent from './ViewComponent'
@@ -21,9 +21,9 @@ class MovieApp extends Component{
                 <h4>Find all your movie ratings here</h4>
                 <br />
                 <nav className="nav">
-                    <a className="nav-link active" onClick={() => this.activeChange("Entry")}>Entry</a>
-                    <a className="nav-link" onClick={() => this.activeChange("View")}>View</a>
-                    <a className="nav-link" onClick={() => this.activeChange("About")}>About</a>
+                    <button className="nav-link active" onClick={() => this.activeChange("Entry")}>Entry</button>
+                    <button className="nav-link" onClick={() => this.activeChange("View")}>View</button>
+                    <button className="nav-link" onClick={() => this.activeChange("About")}>About</button>
                 </nav>
 
                 {this.state.active === "Entry" && <EntryComponent />}
