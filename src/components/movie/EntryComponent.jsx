@@ -11,6 +11,8 @@ class EntryComponent extends Component{
         return(
             <div>
             <div className="container">
+                You can add a new movie here
+                <p />
                 <Formik 
                 initialValues={{
                     movieTitle: "Blade Runner",
@@ -39,7 +41,7 @@ class EntryComponent extends Component{
                                     <Field className="form-control" type="text" name="movieGenre" />
                                 </fieldset>
                                 <fieldset className="form-group">
-                                    <label>Target Date</label>
+                                    <label>Year of Release</label>
                                     <Field className="form-control" type="text" name="movieYear" />
                                 </fieldset>
                                 <fieldset className="form-group">
