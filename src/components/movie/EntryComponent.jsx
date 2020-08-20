@@ -1,18 +1,30 @@
 import React, {Component} from 'react'
+import ReactStars from "react-rating-stars-component";
 import {Formik, Form, Field} from 'formik';
 
 class EntryComponent extends Component{
 
+    constructor(props){
+        super(props)
+        this.state={
+            movieRating: 0
+        }
+    }
+
     onSubmit=(values)=>{
+        values.movieRating = this.state.movieRating
+        console.log(values)
         this.props.funct(values)
     }
+    ratingChanged = (newRating) => {
+        this.setState({
+            movieRating: newRating
+        })
+    };
     render(){
         let i = 1910
         let years= []
         for (i; i<2021; i++){years.push(i)}
-        i = 1
-        let stars= []
-        for (i; i<6; i++){stars.push(i)}
         return(
             <div>
             <div className="container">
@@ -59,9 +71,18 @@ class EntryComponent extends Component{
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Rating</label>
-                                    <Field className="form-control" as="select" name="movieRating" >
-                                        {stars.map(star => <option value={star} key={star}>{star}</option>)}
-                                    </Field>
+                                    <div className="d-flex justify-content-center">
+                                        <ReactStars
+                                            count={5}
+                                            onChange={this.ratingChanged}
+                                            size={42}
+                                            isHalf={true}
+                                            emptyIcon={<i className="far fa-star"></i>}
+                                            halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                            fullIcon={<i className="fa fa-star"></i>}
+                                            activeColor="#ffd700"
+                                        />
+                                    </div>
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Actors</label>
