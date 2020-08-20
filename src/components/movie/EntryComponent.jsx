@@ -57,7 +57,7 @@ class EntryComponent extends Component{
                     movieGenre: "Action",
                     movieYear: 1982,
                     movieRating: 5,
-                    1: "Henry Sellick"
+                    1: "Ridley Scott"
                 }}
                 onSubmit={this.onSubmit}
                 enableReinitialize={true}
