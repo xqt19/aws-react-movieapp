@@ -10,7 +10,6 @@ class MovieApp extends Component{
     constructor(props){
         super(props)
         this.state ={
-            saveClicked: false,
             active: "Entry",
             movies:
             [
@@ -48,7 +47,6 @@ class MovieApp extends Component{
     activeChange(word){
         this.setState({
             active: `${word}`,
-            saveClicked: false
         })
     }
 
@@ -57,8 +55,7 @@ class MovieApp extends Component{
         movies.push(values)
         this.setState({
             active: "Entry",
-            movies: movies,
-            saveClicked: true
+            movies: movies
         })
         
     }

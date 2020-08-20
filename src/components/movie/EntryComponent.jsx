@@ -7,12 +7,23 @@ class EntryComponent extends Component{
     constructor(props){
         super(props)
         this.state={
-            movieRating: 0
+            saveClicked: false,
+            movieRating: 0,
+            noOfActors: 1
         }
     }
 
     onSubmit=(values)=>{
         values.movieRating = this.state.movieRating
+        let actors = []
+        let i=1
+        for(i; i<this.state.noOfActors+1; i++){
+            actors.push(values[i])
+        }
+        values.movieActors = actors
+        this.setState({
+            saveClicked: true
+        })
         this.props.funct(values)
     }
     ratingChanged = (newRating) => {
@@ -20,10 +31,20 @@ class EntryComponent extends Component{
             movieRating: newRating
         })
     };
+    addActor =() => {
+        this.setState({
+            noOfActors: this.state.noOfActors +1
+        })
+    }
+
     render(){
         let i = 1910
         let years= []
         for (i; i<2021; i++){years.push(i)}
+        let j=1
+        let num = this.state.noOfActors+1
+        let numarray = []
+        for (j; j<num; j++){numarray.push(j)}
         return(
             <div>
             <div className="container">
@@ -36,7 +57,7 @@ class EntryComponent extends Component{
                     movieGenre: "Action",
                     movieYear: 1982,
                     movieRating: 5,
-                    movieActors: ["Ridley Scott"],
+                    1: "Henry Sellick"
                 }}
                 onSubmit={this.onSubmit}
                 enableReinitialize={true}
@@ -85,8 +106,11 @@ class EntryComponent extends Component{
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Actors</label>
-                                    <Field className="form-control" type="text" name="movieActors" />
+                                    {numarray.map(num => <Field className="form-control" type="text" name={num} key={num} />)}
+                                    <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add another actor</button>
                                 </fieldset>
+                                <hr />
+                                {this.state.saveClicked && <div className="alert alert-success">New Movie Added</div>}
                                 <button type="submit" className="btn btn-success">Save</button>
                             </Form>
                         )
