@@ -32,9 +32,9 @@ class MovieApp extends Component{
                 <h4>Find all your movie ratings here</h4>
                 <br />
                 <nav className="nav">
-                    <button className="nav-link active" onClick={() => this.activeChange("Entry")}>Entry</button>
-                    <button className="nav-link" onClick={() => this.activeChange("View")}>View</button>
-                    <button className="nav-link" onClick={() => this.activeChange("About")}>About</button>
+                    <button className={this.state.active === "Entry" ? "nav-link active" : "nav-link"} onClick={() => this.activeChange("Entry")}>Entry</button>
+                    <button className={this.state.active === "View" ? "nav-link active" : "nav-link"}  onClick={() => this.activeChange("View")}>View</button>
+                    <button className={this.state.active === "About" ? "nav-link active" : "nav-link"}  onClick={() => this.activeChange("About")}>About</button>
                 </nav>
 
                 {this.state.active === "Entry" && <EntryComponent funct={this.addMovie}/>}
