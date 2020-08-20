@@ -4,10 +4,15 @@ import {Formik, Form, Field} from 'formik';
 class EntryComponent extends Component{
 
     onSubmit=(values)=>{
-        
-        console.log(values)
+        this.props.funct(values)
     }
     render(){
+        let i = 1910
+        let years= []
+        for (i; i<2021; i++){years.push(i)}
+        i = 1
+        let stars= []
+        for (i; i<6; i++){stars.push(i)}
         return(
             <div>
             <div className="container">
@@ -18,9 +23,9 @@ class EntryComponent extends Component{
                     movieTitle: "Blade Runner",
                     movieLang: "English",
                     movieGenre: "Action",
-                    movieYear: "1982",
-                    movieRating: "5",
-                    movieActors: "Ridley Scott",
+                    movieYear: 1982,
+                    movieRating: 5,
+                    movieActors: ["Ridley Scott"],
                 }}
                 onSubmit={this.onSubmit}
                 enableReinitialize={true}
@@ -38,15 +43,25 @@ class EntryComponent extends Component{
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Genre</label>
-                                    <Field className="form-control" type="text" name="movieGenre" />
+                                    <Field className="form-control" as="select" name="movieGenre">
+                                        <option value="Action">Action</option>
+                                        <option value="Comedy">Comedy</option>
+                                        <option value="Romance">Romance</option>
+                                        <option value="Sci-Fi">Sci-Fi</option>
+                                        <option value="Thriller">Thriller</option>
+                                    </Field>
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Year of Release</label>
-                                    <Field className="form-control" type="text" name="movieYear" />
+                                    <Field className="form-control"as="select" name="movieYear">
+                                        {years.map(year => <option value={year} key={year}>{year}</option>)}
+                                    </Field>
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Rating</label>
-                                    <Field className="form-control" type="text" name="movieRating" />
+                                    <Field className="form-control" as="select" name="movieRating" >
+                                        {stars.map(star => <option value={star} key={star}>{star}</option>)}
+                                    </Field>
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Actors</label>

@@ -10,8 +10,19 @@ class MovieApp extends Component{
     constructor(props){
         super(props)
         this.state ={
-            active: "Entry"
+            active: "Entry",
+            movies:
+            [
+                {"id": 95, "movieTitle": "Black Panther","movieLang": "English","movieGenre": "Action","movieYear": 2018,"movieRating": 5,
+                "movieActors": ["Chadwick Boseman"]},
+                {"id": 96, "movieTitle": "The Irishman","movieLang": "Irish","movieGenre": "Thriller","movieYear": 2019,"movieRating": 4,
+                "movieActors": ["Robert Downey Jr", "Charlie Chaplin", "Patrick Steward"]},
+                {"id": 97, "movieTitle": "Casablanca","movieLang": "Spanish","movieGenre": "Romance","movieYear": 1942,"movieRating": 3,
+                "movieActors": ["White House", "Kamala Harris"]},
+            ]
         }
+        this.activeChange = this.activeChange.bind(this)
+        this.addMovie = this.addMovie.bind(this)
     }
     render(){
         return(
@@ -26,8 +37,8 @@ class MovieApp extends Component{
                     <button className="nav-link" onClick={() => this.activeChange("About")}>About</button>
                 </nav>
 
-                {this.state.active === "Entry" && <EntryComponent />}
-                {this.state.active === "View" && <ViewComponent />}
+                {this.state.active === "Entry" && <EntryComponent funct={this.addMovie}/>}
+                {this.state.active === "View" && <ViewComponent gift={this.state.movies}/>}
                 {this.state.active === "About" && <AboutComponent />}
             </div>
         )
@@ -35,6 +46,15 @@ class MovieApp extends Component{
     activeChange(word){
         this.setState({
             active: `${word}`
+        })
+    }
+
+    addMovie(values){
+        let movies = this.state.movies
+        movies.push(values)
+        this.setState({
+            active: "Entry",
+            movies: movies
         })
     }
 }
