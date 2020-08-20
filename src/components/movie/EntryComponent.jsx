@@ -13,7 +13,6 @@ class EntryComponent extends Component{
 
     onSubmit=(values)=>{
         values.movieRating = this.state.movieRating
-        console.log(values)
         this.props.funct(values)
     }
     ratingChanged = (newRating) => {
