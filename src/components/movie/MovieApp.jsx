@@ -10,6 +10,7 @@ class MovieApp extends Component{
     constructor(props){
         super(props)
         this.state ={
+            saveClicked: false,
             active: "Entry",
             movies:
             [
@@ -37,6 +38,7 @@ class MovieApp extends Component{
                     <button className={this.state.active === "About" ? "nav-link active" : "nav-link"}  onClick={() => this.activeChange("About")}>About</button>
                 </nav>
 
+                {this.state.saveClicked && <div className="alert alert-success">New Movie Added</div>}
                 {this.state.active === "Entry" && <EntryComponent funct={this.addMovie}/>}
                 {this.state.active === "View" && <ViewComponent gift={this.state.movies}/>}
                 {this.state.active === "About" && <AboutComponent />}
@@ -45,7 +47,8 @@ class MovieApp extends Component{
     }
     activeChange(word){
         this.setState({
-            active: `${word}`
+            active: `${word}`,
+            saveClicked: false
         })
     }
 
@@ -54,8 +57,10 @@ class MovieApp extends Component{
         movies.push(values)
         this.setState({
             active: "Entry",
-            movies: movies
+            movies: movies,
+            saveClicked: true
         })
+        
     }
 }
 
