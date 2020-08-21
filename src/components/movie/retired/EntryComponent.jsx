@@ -24,8 +24,7 @@ class EntryComponent extends Component{
         this.setState({
             saveClicked: true
         })
-        console.log(values)
-        // call the axios
+        this.props.funct(values)
     }
     ratingChanged = (newRating) => {
         this.setState({
