@@ -3,17 +3,33 @@ import ReactStars from "react-rating-stars-component";
 import {Formik, Form, Field} from 'formik';
 import MovieDataService from '../../api/MovieDataService.js'
 
-class EntryComponent extends Component{
-
+class EditComponent extends Component{
     constructor(props){
         super(props)
-        this.state={
+        this.state ={
             saveClicked: false,
             movieRating: 0,
-            noOfActors: 1
+            noOfActors: 1,
+            movie:
+            [
+
+            ]
         }
     }
+    componentDidMount(){
+        this.loadForm()
+    }
 
+    loadForm(){
+        console.log(this.props.editId)
+        // MovieDataService.getMovie(this.props.editId)
+        // .then(response =>
+        //     this.handleResponse(response)
+        // )
+    }
+    handleResponse=(response)=>{
+        //load response into movie
+    }
     onSubmit=(values)=>{
         values.movieRating = this.state.movieRating
         let actors = []
@@ -126,4 +142,4 @@ class EntryComponent extends Component{
     }
 }
 
-export default EntryComponent
+export default EditComponent;

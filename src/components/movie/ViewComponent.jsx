@@ -1,7 +1,34 @@
 import React, {Component} from 'react'
 import MovieDataService from '../../api/MovieDataService.js'
+import EditComponent from './EditComponent'
 
 class ViewComponent extends Component{
+    constructor(props){
+        super(props)
+        this.state ={
+            editId: 0,
+            editmode: false
+        }
+    }
+    hello=(id)=>{
+        this.setState({
+            editId: id,
+            editmode: true
+        })
+    }
+
+    render(){
+        return(
+            <div>
+                {this.state.editmode === false && <ViewComponent2 method={this.hello} />}
+                {this.state.editmode && <EditComponent editId={this.state.editId}/>}
+            </div>
+        )
+    }
+}
+
+
+class ViewComponent2 extends Component{
     constructor(props){
         super(props)
         this.state ={
@@ -54,7 +81,7 @@ class ViewComponent extends Component{
                                 <td>{movie.movieYear}</td>
                                 <td>{movie.movieRating}</td>
                                 <td><ul className="list-unstyled">{movie.movieActors.map(name => <li key={name}>{name}</li>)}</ul></td>
-                                {/* <td><button className="btn btn-success" onClick={() => this.updateMovieClicked(movie.id)}>Update</button></td> */}
+                                <td><button className="btn btn-success" onClick={() => this.updateMovieClicked(movie.id)}>Update</button></td>
                                 <td><button className="btn btn-danger" onClick={() => this.deleteMovieClicked(movie.id)}>Delete</button></td>
                             </tr>   
                         )}
@@ -63,11 +90,11 @@ class ViewComponent extends Component{
             </div>
         )
     }
-    updateMovieClicked(id){
+    updateMovieClicked=(id)=>{
         console.log(`updateMovieClicked - Id: ` + id)
+        this.props.method(id)
     }
     deleteMovieClicked(id){
-        console.log(`deleteMovieClicked - Id: ` + id)
         MovieDataService.deleteMovie(id)
         .then(response => {
             this.refreshMovies()
@@ -75,5 +102,8 @@ class ViewComponent extends Component{
     }
 
 }
+
+
+
 
 export default ViewComponent
