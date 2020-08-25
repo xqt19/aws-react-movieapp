@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import ReactStars from "react-rating-stars-component";
 import {Formik, Form, Field} from 'formik';
-import MovieDataService from '../../api/MovieDataService.js'
 
 class EntryComponent extends Component{
 
@@ -25,10 +24,7 @@ class EntryComponent extends Component{
         this.setState({
             saveClicked: true
         })
-        MovieDataService.createNewMovie(values)
-        .then(response =>
-            console.log(response)
-        )
+        this.props.funct(values)
     }
     ratingChanged = (newRating) => {
         this.setState({
