@@ -9,11 +9,8 @@ class EditComponent extends Component{
         this.state ={
             saveClicked: false,
             movieRating: 0,
-            noOfActors: 1,
-            movie:
-            [
-
-            ]
+            movie: null,
+            noOfActors: null
         }
     }
     componentDidMount(){
@@ -21,29 +18,32 @@ class EditComponent extends Component{
     }
 
     loadForm(){
-        console.log(this.props.editId)
-        // MovieDataService.getMovie(this.props.editId)
-        // .then(response =>
-        //     this.handleResponse(response)
-        // )
+        MovieDataService.getMovie(this.props.editId)
+        .then(response =>
+            this.handleResponse(response)
+        )
     }
     handleResponse=(response)=>{
-        //load response into movie
+        this.setState({
+            movie: response.data
+        })
     }
     onSubmit=(values)=>{
+       
         values.movieRating = this.state.movieRating
-        let actors = []
-        let i=1
-        for(i; i<this.state.noOfActors+1; i++){
-            actors.push(values[i])
-        }
-        values.movieActors = actors
-        this.setState({
-            saveClicked: true
-        })
-        MovieDataService.createNewMovie(values)
+        values.id = this.props.editId
+        // let actors = []
+        // let i=1
+        // for(i; i<this.state.noOfActors+1; i++){
+        //     actors.push(values[i])
+        // }
+        // values.movieActors = actors
+        // this.setState({
+        //     saveClicked: true
+        // })
+        MovieDataService.updateMovie(values)
         .then(response =>
-            console.log(response)
+            this.props.method()
         )
     }
     ratingChanged = (newRating) => {
@@ -52,32 +52,33 @@ class EditComponent extends Component{
         })
     };
     addActor =() => {
+        let actors = this.state.movie.movieActors
+        let length = actors.length +1
+        actors.push(`New Actor ${length}`)
         this.setState({
-            noOfActors: this.state.noOfActors +1
+            noOfActors: actors.length
         })
+    }
+    hello=()=>{
+        this.props.method()
     }
 
     render(){
         let i = 1910
         let years= []
         for (i; i<2021; i++){years.push(i)}
-        let j=1
-        let num = this.state.noOfActors+1
-        let numarray = []
-        for (j; j<num; j++){numarray.push(j)}
         return(
             <div>
-            <div className="container">
-                You can add a new movie here
-                <p />
+            {this.state.movie !==null && <div className="container">
+                Updating your movie... or press to go back <br /><button className="btn btn-link" onClick={this.hello}>Go Back</button> 
+                <hr />
                 <Formik 
                 initialValues={{
-                    movieTitle: "Blade Runner",
-                    movieLang: "English",
-                    movieGenre: "Action",
-                    movieYear: 1982,
-                    movieRating: 5,
-                    1: "Ridley Scott"
+                    movieTitle: this.state.movie.movieTitle,
+                    movieLang: this.state.movie.movieLang,
+                    movieGenre: this.state.movie.movieGenre,
+                    movieYear: this.state.movie.movieYear,
+                    movieRating: this.state.movie.movieRating // Make the stars show up
                 }}
                 onSubmit={this.onSubmit}
                 enableReinitialize={true}
@@ -124,19 +125,19 @@ class EditComponent extends Component{
                                         />
                                     </div>
                                 </fieldset>
-                                <fieldset className="form-group">
+                                {/* <fieldset className="form-group">
                                     <label>Actors</label>
-                                    {numarray.map(num => <Field className="form-control" type="text" name={num} key={num} />)}
+                                    {this.state.movie.movieActors.map(actor => <Field className="form-control" type="text" name={actor} key={actor} placeholder={actor} />)}
                                     <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add another actor</button>
-                                </fieldset>
+                                </fieldset> */}
                                 <hr />
-                                {this.state.saveClicked && <div className="alert alert-success">New Movie Added</div>}
+                                {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>}
                                 <button type="submit" className="btn btn-success">Save</button>
                             </Form>
                         )
                     }
                 </Formik>
-            </div>
+            </div>}
             </div>
         )
     }

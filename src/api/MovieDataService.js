@@ -13,9 +13,9 @@ class MovieDataService {
         // return axios.post(`http://rest-api-xq-dev.eba-bwit5cb9.ap-southeast-1.elasticbeanstalk.com/movies`)
         return axios.delete(`http://localhost:5000/movies/${id}`)
     }
-    updateMovie(id,movie){
+    updateMovie(movie){
         // return axios.post(`http://rest-api-xq-dev.eba-bwit5cb9.ap-southeast-1.elasticbeanstalk.com/movies`)
-        return axios.put(`http://localhost:5000/movies/${id}`, movie)
+        return axios.put(`http://localhost:5000/movies`, movie)
     }
     getMovie(id){
         return axios.get(`http://localhost:5000/movies/${id}`)
