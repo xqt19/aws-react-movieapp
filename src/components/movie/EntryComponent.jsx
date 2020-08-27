@@ -108,11 +108,11 @@ class EntryComponent extends Component{
                                         />
                                     </div>
                                 </fieldset>
-                                <fieldset className="form-group">
+                                {/* <fieldset className="form-group">
                                     <label>Actors</label>
                                     {numarray.map(num => <Field className="form-control" type="text" name={num} key={num} />)}
                                     <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add another actor</button>
-                                </fieldset>
+                                </fieldset> */}
                                 <hr />
                                 {this.state.saveClicked && <div className="alert alert-success">New Movie Added</div>}
                                 <button type="submit" className="btn btn-success">Save</button>
