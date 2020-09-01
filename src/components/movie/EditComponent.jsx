@@ -10,7 +10,8 @@ class EditComponent extends Component{
             saveClicked: false,
             movieRating: 0,
             movie: null,
-            noOfActors: null
+            noOfActors: 1,
+            editActors: false
         }
     }
     componentDidMount(){
@@ -25,22 +26,23 @@ class EditComponent extends Component{
     }
     handleResponse=(response)=>{
         this.setState({
-            movie: response.data
+            movie: response.data,
+            noOfActors: response.data.movieActors.length
         })
     }
     onSubmit=(values)=>{
        
         values.movieRating = this.state.movieRating
         values.id = this.props.editId
-        // let actors = []
-        // let i=1
-        // for(i; i<this.state.noOfActors+1; i++){
-        //     actors.push(values[i])
-        // }
-        // values.movieActors = actors
-        // this.setState({
-        //     saveClicked: true
-        // })
+        let actors = []
+        let i=0
+        for(i; i<this.state.noOfActors; i++){
+            if (values[i] != null) {actors.push(values[i])}
+        }
+        values.movieActors = actors
+        this.setState({
+            saveClicked: true
+        })
         MovieDataService.updateMovie(values)
         .then(response =>
             this.props.method()
@@ -62,11 +64,17 @@ class EditComponent extends Component{
     hello=()=>{
         this.props.method()
     }
+    EditActorButton=()=>{
+        this.setState({
+            editActors: true
+        })
+    }
 
     render(){
         let i = 1910
         let years= []
         for (i; i<2021; i++){years.push(i)}
+
         return(
             <div>
             {this.state.movie !==null && <div className="container">
@@ -125,11 +133,21 @@ class EditComponent extends Component{
                                         />
                                     </div>
                                 </fieldset>
-                                {/* <fieldset className="form-group">
+                                <fieldset className="form-group">
                                     <label>Actors</label>
-                                    {this.state.movie.movieActors.map(actor => <Field className="form-control" type="text" name={actor} key={actor} placeholder={actor} />)}
-                                    <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add another actor</button>
-                                </fieldset> */}
+                                    {this.state.movie.movieActors.map((actor, index) => <Field className="form-control" type="text" name={index} key={index} placeholder={actor} />)}
+                                    <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add an actor</button>
+                                </fieldset>
+                                
+                                {/* <label>Actors</label><br /> */}
+                                {/* {this.state.movie.movieActors.map((actor, index) => <div> */}
+                                    {/* <input type="text" name={index} key={index} value={actor} />
+                                    <button type="button" className="btn btn-info" size="sm" key={"info"+index}>Edit</button>
+                                    <button type="button" className="btn btn-warning" size="sm" key={"warning"+index}>Delete</button> */}
+                                {/* </div>)} */}
+                    
+                                    {/* <ActorComponent actors={this.state.movie.movieActors}/>                 */}
+
                                 <hr />
                                 {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>}
                                 <button type="submit" className="btn btn-success">Save</button>
@@ -142,5 +160,25 @@ class EditComponent extends Component{
         )
     }
 }
+
+// class ActorComponent extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state={
+
+//         }
+//     }
+
+//     render(){
+//         return(
+//             <div>
+//                 {this.props.actors.map((actor, index) => 
+//                     <h6>{index} - {actor}</h6>
+//                 )}
+//             </div>
+            
+//         )
+//     }
+// }
 
 export default EditComponent;

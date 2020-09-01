@@ -11,12 +11,14 @@ class ViewComponent extends Component{
         }
     }
     hello=(id)=>{
+        // begin editing movie
         this.setState({
             editId: id,
             editmode: true
         })
     }
     hello2=()=>{
+        // this is the go-back method to cancel editing
         this.setState({
             editmode: false
         })
@@ -56,7 +58,8 @@ class ViewComponent2 extends Component{
             movies: response.data
         })
     }
-    render(){            
+
+    render(){           
         return(
             <div>
                 You can view your movies here. <p />
@@ -70,7 +73,7 @@ class ViewComponent2 extends Component{
                             <th>Genre</th>
                             <th>Year</th>
                             <th>Rating</th>
-                            {/* <th>Actors</th> */}
+                            <th>Actors</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,7 +85,7 @@ class ViewComponent2 extends Component{
                                 <td>{movie.movieGenre}</td>
                                 <td>{movie.movieYear}</td>
                                 <td>{movie.movieRating}</td>
-                                {/* <td><ul className="list-unstyled">{movie.movieActors.map(name => <li key={name}>{name}</li>)}</ul></td> */}
+                                <td><ul className="list-unstyled">{movie.movieActors.map(name => <li key={name}>{name}</li>)}</ul></td>
                                 <td><button className="btn btn-success" onClick={() => this.updateMovieClicked(movie.id)}>Update</button></td>
                                 <td><button className="btn btn-danger" onClick={() => this.deleteMovieClicked(movie.id)}>Delete</button></td>
                             </tr>   
