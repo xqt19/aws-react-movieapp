@@ -10,18 +10,20 @@ class EntryComponent extends Component{
         this.state={
             saveClicked: false,
             movieRating: 0,
-            noOfActors: 1
+            noOfActors: 1,
+            movieActors: ["Ridley Scott"]
         }
     }
 
     onSubmit=(values)=>{
         values.movieRating = this.state.movieRating
-        let actors = []
-        let i=1
-        for(i; i<this.state.noOfActors+1; i++){
-            actors.push(values[i])
-        }
-        values.movieActors = actors
+        let actorsFiltered = this.state.movieActors.filter(function(names){
+            if (names !== ""){
+                return names
+            }
+            return null
+        })
+        values.movieActors = actorsFiltered
         this.setState({
             saveClicked: true
         })
@@ -36,8 +38,17 @@ class EntryComponent extends Component{
         })
     };
     addActor =() => {
+        let actors = this.state.movieActors
+        actors.push("")
         this.setState({
-            noOfActors: this.state.noOfActors +1
+            movieActors: actors
+        })
+    }
+    handleActorChange = (e,index)=>{
+        let actors = this.state.movieActors
+        actors[index] = e.target.value
+        this.setState({
+            movieActors : actors
         })
     }
 
@@ -45,10 +56,6 @@ class EntryComponent extends Component{
         let i = 1910
         let years= []
         for (i; i<2021; i++){years.push(i)}
-        let j=1
-        let num = this.state.noOfActors+1
-        let numarray = []
-        for (j; j<num; j++){numarray.push(j)}
         return(
             <div>
             <div className="container">
@@ -110,9 +117,14 @@ class EntryComponent extends Component{
                                 </fieldset>
                                 <fieldset className="form-group">
                                     <label>Actors</label>
-                                    {numarray.map(num => <Field className="form-control" type="text" name={num} key={num} />)}
+                                    {this.state.movieActors.map((actor, index) => <Field className="form-control" type="text" name={index} key={index} value={actor} onChange={(e)=> this.handleActorChange(e,index)} />)}
                                     <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add another actor</button>
                                 </fieldset>
+                                {/* <fieldset className="form-group">
+                                    <label>Actors</label>
+                                    {numarray.map(num => <Field className="form-control" type="text" name={num} key={num} />)}
+                                    <button type="button" className="btn btn-primary m-3" onClick={this.addActor}>Add another actor</button>
+                                </fieldset> */}
                                 <hr />
                                 {this.state.saveClicked && <div className="alert alert-success">New Movie Added</div>}
                                 <button type="submit" className="btn btn-success">Save</button>

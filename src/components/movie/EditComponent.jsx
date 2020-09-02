@@ -37,10 +37,12 @@ class EditComponent extends Component{
         values.movieRating = this.state.movieRating
         values.id = this.props.editId
         let actorsFiltered = this.state.movieActors.filter(function(names){
-            return names != ""
+            if (names !== ""){
+                return names
+            }
+            return null
         })
         values.movieActors = actorsFiltered
-        console.log(actorsFiltered)
         this.setState({
             saveClicked: true
         })
