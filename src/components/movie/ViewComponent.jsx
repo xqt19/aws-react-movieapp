@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ReactStars from "react-rating-stars-component";
 import MovieDataService from '../../api/MovieDataService.js'
 import EditComponent from './EditComponent'
 
@@ -84,7 +85,7 @@ class ViewComponent2 extends Component{
                                 <td>{movie.movieLang}</td>
                                 <td>{movie.movieGenre}</td>
                                 <td>{movie.movieYear}</td>
-                                <td>{movie.movieRating}</td>
+                                <td><div className="d-flex justify-content-center"><ReactStars edit={false} value={movie.movieRating} isHalf={true} size={28} /></div></td>
                                 <td><ul className="list-unstyled">{movie.movieActors.map(name => <li key={name}>{name}</li>)}</ul></td>
                                 <td><button className="btn btn-success" onClick={() => this.updateMovieClicked(movie.id)}>Update</button></td>
                                 <td><button className="btn btn-danger" onClick={() => this.deleteMovieClicked(movie.id)}>Delete</button></td>
