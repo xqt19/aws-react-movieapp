@@ -89,10 +89,10 @@ class EntryComponent extends Component{
         for (i; i<2021; i++){years.push(i)}
         return(
             <div>
-            <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
             <div className="container">
                 You can add a new movie here
                 <p />
+                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
                 <Formik 
                 initialValues={{
                     movieTitle: "Blade Runner",
@@ -165,8 +165,8 @@ class EntryComponent extends Component{
                         )
                     }
                 </Formik>
+                </Animated>
             </div>
-            </Animated>
             </div>
         )
     }
