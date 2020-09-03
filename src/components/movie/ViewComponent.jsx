@@ -4,7 +4,6 @@ import MovieDataService from '../../api/MovieDataService.js'
 import EditComponent from './EditComponent'
 import {Animated} from "react-animated-css"
 import ReactTable from "react-table-6"
-import 'react-table-6/react-table.css'
 import './MovieApp.css'
 import StarRatings from 'react-star-ratings'
 
@@ -196,12 +195,12 @@ class ViewComponent2 extends Component{
 
     render(){
         const columns =[
-            { Header: 'Title', accessor: 'movieTitle', style:{textAlign: 'center', fontWeight: "bold", margin: "20px"} },
-            { Header: 'Language', accessor:'movieLang', style:{textAlign: 'center', margin: "20px"} },
-            { Header: 'Genre', accessor:'movieGenre', style:{textAlign: 'center', margin: "20px"} },
-            { Header: 'Year', accessor:'movieYear', style:{textAlign: 'center', margin: "20px"} },
-        { Header: 'Rating', accessor:'movieRating', style:{textAlign: 'center', margin: "20px"}, Cell: props => <React.Fragment>{this.formatStar(props.value)}</React.Fragment> },
-            { Header: 'Actors', accessor:'movieActors', style:{textAlign: 'center', margin: "20px"}, Cell: props=> <ul className="list-unstyled">{props.value.map(name => <li key={name}>{name}</li>)}</ul> },
+            { Header: 'Title   ↕', accessor: 'movieTitle', style:{textAlign: 'center', fontWeight: "bold", margin: "20px"} },
+            { Header: 'Language   ↕', accessor:'movieLang', style:{textAlign: 'center', margin: "20px"} },
+            { Header: 'Genre   ↕', accessor:'movieGenre', style:{textAlign: 'center', margin: "20px"} },
+            { Header: 'Year   ↕', accessor:'movieYear', style:{textAlign: 'center', margin: "20px"} },
+        { Header: 'Rating   ↕', accessor:'movieRating', style:{textAlign: 'center', margin: "20px"}, Cell: props => <React.Fragment>{this.formatStar(props.value)}</React.Fragment> },
+            { Header: 'Actors   ↕', accessor:'movieActors', style:{textAlign: 'center', margin: "20px"}, Cell: props=> <ul className="list-unstyled">{props.value.map(name => <li key={name}>{name}</li>)}</ul> },
             { Header: '', accessor:'id', style:{textAlign: 'center', margin: "20px"}, Cell: props => <button className="btn btn-success" onClick={() => this.updateMovieClicked(props.value)}>Update</button>},
             { Header: '', accessor:'id', style:{textAlign: 'center', margin: "20px"}, Cell: props => <button className="btn btn-danger" onClick={() => this.deleteMovieClicked(props.value)}>Delete</button>},
         ]           
@@ -268,6 +267,11 @@ class ViewComponent2 extends Component{
                     </tbody>
                 </table>
                 </Animated> */}
+
+
+
+
+                
 
                 {/* REACT TABLE BEGINS//////////////////////////////////// */}
                 <hr />
