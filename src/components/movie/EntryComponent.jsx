@@ -35,7 +35,7 @@ class EntryComponent extends Component{
         // validating the movie title is unique
         let flag = 0
         movies.forEach((movie)=>{
-            if (values.movieTitle === movie.movieTitle){
+            if (values.movieTitle.toUpperCase() === movie.movieTitle.toUpperCase()){
                 flag = 1
             }
         })
@@ -53,7 +53,9 @@ class EntryComponent extends Component{
             this.setState({
                 saveClicked: true,
                 movieTitleInUse: false
-            })          
+            })
+            setTimeout(()=>{ this.props.method("View") }, 500)
+            
         }
 
     }
