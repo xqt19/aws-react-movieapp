@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import ReactStars from "react-rating-stars-component";
 import MovieDataService from '../../api/MovieDataService.js'
 import EditComponent from './EditComponent'
+import {Animated} from "react-animated-css";
 
 class ViewComponent extends Component{
     constructor(props){
@@ -215,6 +216,7 @@ class ViewComponent2 extends Component{
                     {this.state.searchfield==="actor" && <input type="text" placeholder="Evan Rachel Wood" className="mx-2" onChange={(e) => this.handleSearchbar(e)}></input>}   
                 <p />
 
+                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
                 <table className="table">
                     <thead>
                         <tr>
@@ -243,6 +245,7 @@ class ViewComponent2 extends Component{
                         )}
                     </tbody>
                 </table>
+                </Animated>
             </div>
         )
     }

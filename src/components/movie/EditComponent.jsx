@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import ReactStars from "react-rating-stars-component";
 import {Formik, Form, Field} from 'formik';
 import MovieDataService from '../../api/MovieDataService.js'
+import {Animated} from "react-animated-css";
 
 class EditComponent extends Component{
     constructor(props){
         super(props)
         this.state ={
-            saveClicked: false,
-            movieTitleInUse: false,
+            // saveClicked: false,
             movieRating: 0,
             movie: null,
             movieActors: [],
@@ -42,27 +42,13 @@ class EditComponent extends Component{
             return null
         })
         values.movieActors = actorsFiltered
-        // validating the movie title is unique
-        let flag = 0
-        this.props.movies.forEach((movie)=>{
-            if (values.movieTitle === movie.movieTitle){
-                flag = 1
-            }
-        })
-        if (flag === 1){
-            this.setState({
-                movieTitleInUse: true
-            })
-        } else{
-            this.setState({
-                saveClicked: true,
-                movieTitleInUse: false
-            })
+            // this.setState({
+            //     saveClicked: true
+            // })
             MovieDataService.updateMovie(values)
             .then(response =>
                 this.props.method()
-            )            
-        }
+            )
     }
     ratingChanged = (newRating) => {
         this.setState({
@@ -99,6 +85,7 @@ class EditComponent extends Component{
 
         return(
             <div>
+            <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
             {this.state.movie !==null && <div className="container">
                 Updating your movie... or press to go back <br /><button className="btn btn-link" onClick={this.hello}>Go Back</button> 
                 <hr />
@@ -163,14 +150,14 @@ class EditComponent extends Component{
                                 </fieldset>
 
                                 <hr />
-                                {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>}
-                                {this.state.movieTitleInUse && <div className="alert alert-danger">There Is Already Another Movie By This Name</div>}
+                                {/* {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>} */}
                                 <button type="submit" className="btn btn-success">Update</button>
                             </Form>
                         )
                     }
                 </Formik>
             </div>}
+            </Animated>
             </div>
         )
     }

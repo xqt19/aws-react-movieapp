@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import ReactStars from "react-rating-stars-component";
 import {Formik, Form, Field} from 'formik';
 import MovieDataService from '../../api/MovieDataService.js'
+import {Animated} from "react-animated-css";
 
 class EntryComponent extends Component{
 
@@ -88,6 +89,7 @@ class EntryComponent extends Component{
         for (i; i<2021; i++){years.push(i)}
         return(
             <div>
+            <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
             <div className="container">
                 You can add a new movie here
                 <p />
@@ -164,6 +166,7 @@ class EntryComponent extends Component{
                     }
                 </Formik>
             </div>
+            </Animated>
             </div>
         )
     }

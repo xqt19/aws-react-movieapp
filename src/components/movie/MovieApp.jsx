@@ -25,9 +25,13 @@ class MovieApp extends Component{
                     <button className={this.state.active === "About" ? "nav-link active" : "nav-link"}  onClick={() => this.activeChange("About")}>About</button>
                 </nav>
 
-                {this.state.active === "Entry" && <EntryComponent/>}
+                
+
+                {this.state.active === "Entry" && <EntryComponent />}
                 {this.state.active === "View" && <ViewComponent/>}
                 {this.state.active === "About" && <AboutComponent />}
+
+
             </div>
         )
     }
