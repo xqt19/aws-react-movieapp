@@ -8,10 +8,10 @@ class EditComponent extends Component{
         super(props)
         this.state ={
             saveClicked: false,
+            movieTitleInUse: false,
             movieRating: 0,
             movie: null,
             movieActors: [],
-            noOfActors: 1,
             editActors: false
         }
     }
@@ -29,8 +29,7 @@ class EditComponent extends Component{
         this.setState({
             movie: response.data,
             movieRating: response.data.movieRating,
-            movieActors: response.data.movieActors,
-            noOfActors: response.data.movieActors.length
+            movieActors: response.data.movieActors
         })
     }
     onSubmit=(values)=>{
@@ -43,13 +42,27 @@ class EditComponent extends Component{
             return null
         })
         values.movieActors = actorsFiltered
-        this.setState({
-            saveClicked: true
+        // validating the movie title is unique
+        let flag = 0
+        this.props.movies.forEach((movie)=>{
+            if (values.movieTitle === movie.movieTitle){
+                flag = 1
+            }
         })
-        MovieDataService.updateMovie(values)
-        .then(response =>
-            this.props.method()
-        )
+        if (flag === 1){
+            this.setState({
+                movieTitleInUse: true
+            })
+        } else{
+            this.setState({
+                saveClicked: true,
+                movieTitleInUse: false
+            })
+            MovieDataService.updateMovie(values)
+            .then(response =>
+                this.props.method()
+            )            
+        }
     }
     ratingChanged = (newRating) => {
         this.setState({
@@ -151,7 +164,8 @@ class EditComponent extends Component{
 
                                 <hr />
                                 {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>}
-                                <button type="submit" className="btn btn-success">Save</button>
+                                {this.state.movieTitleInUse && <div className="alert alert-danger">There Is Already Another Movie By This Name</div>}
+                                <button type="submit" className="btn btn-success">Update</button>
                             </Form>
                         )
                     }
