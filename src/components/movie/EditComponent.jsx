@@ -8,11 +8,13 @@ class EditComponent extends Component{
     constructor(props){
         super(props)
         this.state ={
-            // saveClicked: false,
+            saveClicked: false,
             movieRating: 0,
+            originalName: "",
             movie: null,
             movieActors: [],
-            editActors: false
+            editActors: false,
+            movieTitleAlrInUse: false
         }
     }
     componentDidMount(){
@@ -29,7 +31,8 @@ class EditComponent extends Component{
         this.setState({
             movie: response.data,
             movieRating: response.data.movieRating,
-            movieActors: response.data.movieActors
+            movieActors: response.data.movieActors,
+            originalName: response.data.movieTitle
         })
     }
     onSubmit=(values)=>{
@@ -42,13 +45,27 @@ class EditComponent extends Component{
             return null
         })
         values.movieActors = actorsFiltered
-            // this.setState({
-            //     saveClicked: true
-            // })
+        // check that updated movie is not same title as other movies
+        let flag = 0
+        this.props.movies.forEach((movie)=>{
+            if (values.movieTitle.toUpperCase() === movie.movieTitle.toUpperCase() && values.movieTitle !== this.state.originalName){
+                flag = 1
+                this.setState({
+                    saveClicked: false,
+                    movieTitleAlrInUse: true
+                })
+            }
+        })
+        if (flag === 0){
+            this.setState({
+                saveClicked: true,
+                movieTitleAlrInUse: false
+            })
             MovieDataService.updateMovie(values)
             .then(response =>
-                this.props.method()
-            )
+                setTimeout(()=>{ this.props.method() }, 500)
+            )  
+        }
     }
     ratingChanged = (newRating) => {
         this.setState({
@@ -150,7 +167,8 @@ class EditComponent extends Component{
                                 </fieldset>
 
                                 <hr />
-                                {/* {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>} */}
+                                {this.state.movieTitleAlrInUse && <div className="alert alert-danger">Another Movie With This Title Already Exists</div>}
+                                {this.state.saveClicked && <div className="alert alert-success">Movie Updated!</div>}
                                 <button type="submit" className="btn btn-success">Update</button>
                             </Form>
                         )

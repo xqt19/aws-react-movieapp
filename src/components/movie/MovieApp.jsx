@@ -27,7 +27,7 @@ class MovieApp extends Component{
 
                 
 
-                {this.state.active === "Entry" && <EntryComponent />}
+                {this.state.active === "Entry" && <EntryComponent method={this.activeChange}/>}
                 {this.state.active === "View" && <ViewComponent/>}
                 {this.state.active === "About" && <AboutComponent />}
 
