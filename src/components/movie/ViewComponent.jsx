@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import ReactStars from "react-rating-stars-component";
 import MovieDataService from '../../api/MovieDataService.js'
 import EditComponent from './EditComponent'
-import {Animated} from "react-animated-css";
+import {Animated} from "react-animated-css"
+import ReactTable from "react-table-6"
+import './MovieApp.css'
+import StarRatings from 'react-star-ratings'
 
 class ViewComponent extends Component{
     constructor(props){
@@ -179,8 +182,28 @@ class ViewComponent2 extends Component{
             moviesFiltered: moviesFiltered
         })
     }
+    formatStar = (rating) => {
 
-    render(){           
+        return (<StarRatings
+            rating={rating}
+            starDimension="28px"
+            starSpacing="2px"
+            starRatedColor="gold"
+        />);
+    }
+    
+
+    render(){
+        const columns =[
+            { Header: 'Title   ↕', accessor: 'movieTitle', style:{textAlign: 'center', fontWeight: "bold", margin: "20px"} },
+            { Header: 'Language   ↕', accessor:'movieLang', style:{textAlign: 'center', margin: "20px"} },
+            { Header: 'Genre   ↕', accessor:'movieGenre', style:{textAlign: 'center', margin: "20px"} },
+            { Header: 'Year   ↕', accessor:'movieYear', style:{textAlign: 'center', margin: "20px"} },
+        { Header: 'Rating   ↕', accessor:'movieRating', style:{textAlign: 'center', margin: "20px"}, Cell: props => <React.Fragment>{this.formatStar(props.value)}</React.Fragment> },
+            { Header: 'Actors   ↕', accessor:'movieActors', style:{textAlign: 'center', margin: "20px"}, Cell: props=> <ul className="list-unstyled">{props.value.map(name => <li key={name}>{name}</li>)}</ul> },
+            { Header: '', accessor:'id', style:{textAlign: 'center', margin: "20px"}, Cell: props => <button className="btn btn-success" onClick={() => this.updateMovieClicked(props.value)}>Update</button>},
+            { Header: '', accessor:'id', style:{textAlign: 'center', margin: "20px"}, Cell: props => <button className="btn btn-danger" onClick={() => this.deleteMovieClicked(props.value)}>Delete</button>},
+        ]           
         return(
             <div>
                 You can view and search for your movies here. <p />
@@ -216,11 +239,10 @@ class ViewComponent2 extends Component{
                     {this.state.searchfield==="actor" && <input type="text" placeholder="Evan Rachel Wood" className="mx-2" onChange={(e) => this.handleSearchbar(e)}></input>}   
                 <p />
 
-                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
+                {/* <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
                 <table className="table">
                     <thead>
                         <tr>
-                            {/* <th>ID</th> */}
                             <th>Title</th>
                             <th>Language</th>
                             <th>Genre</th>
@@ -232,7 +254,6 @@ class ViewComponent2 extends Component{
                     <tbody>
                         {this.state.moviesFiltered.map(movie => 
                             <tr key={movie.movieTitle}>
-                                {/* <td>{movie.id}</td> */}
                                 <td>{movie.movieTitle}</td>
                                 <td>{movie.movieLang}</td>
                                 <td>{movie.movieGenre}</td>
@@ -245,7 +266,22 @@ class ViewComponent2 extends Component{
                         )}
                     </tbody>
                 </table>
+                </Animated> */}
+
+
+
+
+                
+
+                {/* REACT TABLE BEGINS//////////////////////////////////// */}
+                <hr />
+                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
+                <ReactTable className="table"
+                    data={this.state.moviesFiltered}
+                    columns={columns}
+                />
                 </Animated>
+
             </div>
         )
     }
