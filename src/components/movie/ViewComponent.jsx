@@ -8,13 +8,15 @@ class ViewComponent extends Component{
         super(props)
         this.state ={
             editId: 0,
-            editmode: false
+            editmode: false,
+            movies: []
         }
     }
-    hello=(id)=>{
+    hello=(id, movies)=>{
         // begin editing movie
         this.setState({
             editId: id,
+            movies: movies,
             editmode: true
         })
     }
@@ -29,7 +31,7 @@ class ViewComponent extends Component{
         return(
             <div>
                 {this.state.editmode === false && <ViewComponent2 method={this.hello} />}
-                {this.state.editmode && <EditComponent method={this.hello2} editId={this.state.editId}/>}
+                {this.state.editmode && <EditComponent method={this.hello2} editId={this.state.editId} movies={this.state.movies}/>}
             </div>
         )
     }
@@ -54,15 +56,16 @@ class ViewComponent2 extends Component{
     refreshMovies(){
         MovieDataService.retrieveAllMovies()
         .then(response =>
-            this.handleResponse(response)
+            // this.handleResponse(response)
+            this.handleSearches(response)
         )
     }
-    handleResponse=(response)=>{
-        this.setState({
-            movies: response.data
-        })
-        this.handleSearches(response)
-    }
+    // handleResponse=(response)=>{
+        // this.setState({
+        //     movies: response.data
+        // })
+    //     this.handleSearches(response)
+    // }
 
     handleSearchbar=(e)=>{
         this.setState({
@@ -171,6 +174,7 @@ class ViewComponent2 extends Component{
 
 
         this.setState({
+            movies: movies,
             moviesFiltered: moviesFiltered
         })
     }
@@ -243,7 +247,7 @@ class ViewComponent2 extends Component{
         )
     }
     updateMovieClicked=(id)=>{
-        this.props.method(id)
+        this.props.method(id, this.state.movies)
     }
     deleteMovieClicked(id){
         MovieDataService.deleteMovie(id)

@@ -9,13 +9,20 @@ class EntryComponent extends Component{
         super(props)
         this.state={
             saveClicked: false,
+            movieTitleInUse: false,
             movieRating: 0,
-            noOfActors: 1,
-            movieActors: ["Ridley Scott"]
+            movieActors: ["Ridley Scott"],
+            movies: []
         }
     }
-
+    componentDidMount(){
+        MovieDataService.retrieveAllMovies()
+        .then(response =>
+            this.handleRetrieval(response)
+        )        
+    }
     onSubmit=(values)=>{
+        let movies = this.state.movies
         values.movieRating = this.state.movieRating
         let actorsFiltered = this.state.movieActors.filter(function(names){
             if (names !== ""){
@@ -24,14 +31,37 @@ class EntryComponent extends Component{
             return null
         })
         values.movieActors = actorsFiltered
-        this.setState({
-            saveClicked: true
+        // validating the movie title is unique
+        let flag = 0
+        movies.forEach((movie)=>{
+            if (values.movieTitle === movie.movieTitle){
+                flag = 1
+            }
         })
-        MovieDataService.createNewMovie(values)
-        .then(response =>
-            console.log(response)
-        )
+        if (flag === 1){
+            this.setState({
+                saveClicked: false,
+                movieTitleInUse: true
+            })
+        } else{
+            movies.push(values)
+            MovieDataService.createNewMovie(values)
+            .then(response =>
+                console.log(response)
+            )
+            this.setState({
+                saveClicked: true,
+                movieTitleInUse: false
+            })          
+        }
+
     }
+    handleRetrieval = (response) =>(
+        this.setState({
+            movies: response.data
+        })
+    )
+
     ratingChanged = (newRating) => {
         this.setState({
             movieRating: newRating
@@ -127,6 +157,7 @@ class EntryComponent extends Component{
                                 </fieldset> */}
                                 <hr />
                                 {this.state.saveClicked && <div className="alert alert-success">New Movie Added</div>}
+                                {this.state.movieTitleInUse && <div className="alert alert-danger">There Is Already Another Movie By This Name</div>}
                                 <button type="submit" className="btn btn-success">Save</button>
                             </Form>
                         )
