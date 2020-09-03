@@ -102,10 +102,10 @@ class EditComponent extends Component{
 
         return(
             <div>
-            <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
             {this.state.movie !==null && <div className="container">
                 Updating your movie... or press to go back <br /><button className="btn btn-link" onClick={this.hello}>Go Back</button> 
                 <hr />
+                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
                 <Formik 
                 initialValues={{
                     movieTitle: this.state.movie.movieTitle,
@@ -174,8 +174,8 @@ class EditComponent extends Component{
                         )
                     }
                 </Formik>
+                </Animated>
             </div>}
-            </Animated>
             </div>
         )
     }

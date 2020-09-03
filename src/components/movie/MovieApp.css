@@ -2,3 +2,24 @@
     background-color: rgb(83, 83, 209);
     color: white
 }
+
+rt-resizable-header -sort-desc:after {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    content : ' ';
+    border-top: 20px solid #000;
+  }
+  
+  rt-resizable-header -sort-asc:after {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    content : ' ';
+    border-bottom: 20px solid #000;
+  }
+  .ReactTable .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
+      box-shadow: none;
+  }
