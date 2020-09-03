@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import ReactStars from "react-rating-stars-component";
 import {Formik, Form, Field} from 'formik';
 import MovieDataService from '../../api/MovieDataService.js'
+import {Animated} from "react-animated-css";
 
 class EntryComponent extends Component{
 
@@ -91,6 +92,7 @@ class EntryComponent extends Component{
             <div className="container">
                 You can add a new movie here
                 <p />
+                <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
                 <Formik 
                 initialValues={{
                     movieTitle: "Blade Runner",
@@ -163,6 +165,7 @@ class EntryComponent extends Component{
                         )
                     }
                 </Formik>
+                </Animated>
             </div>
             </div>
         )
